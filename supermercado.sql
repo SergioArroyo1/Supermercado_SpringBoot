@@ -24,9 +24,8 @@ EXCEPTION
 END;
 /
 
-------------------------------------------------
 -- TIPO tDomicilio
-------------------------------------------------
+
 CREATE OR REPLACE TYPE tDomicilio AS OBJECT (
     calle VARCHAR2(50),
     numero INT,
@@ -46,9 +45,9 @@ CREATE OR REPLACE TYPE BODY tDomicilio AS
 END;
 /
 
-------------------------------------------------
+
 -- TABLA CLIENTE
-------------------------------------------------
+
 CREATE TABLE CLIENTE (
     NIF CHAR(9) PRIMARY KEY,
     NOMBRE VARCHAR2(50),
@@ -57,9 +56,8 @@ CREATE TABLE CLIENTE (
     CIUDAD VARCHAR2(25)
 );
 
-------------------------------------------------
 -- INSERTS CLIENTE
-------------------------------------------------
+
 INSERT INTO CLIENTE VALUES ('55555555D','ANA GOMEZ MARTINEZ',
     tDomicilio('Marte',12,2,1,'B'),'912345678','BARCELONA');
 
@@ -72,15 +70,15 @@ INSERT INTO CLIENTE VALUES ('77777777F','LAURA FERNANDEZ SANTOS',
 INSERT INTO CLIENTE VALUES ('88888888G','MARIO PEREZ ORTIZ',
     tDomicilio('Galaxia',7,3,1,'D'),'645678901','ZARAGOZA');
 
-------------------------------------------------
+
 -- TIPO VARRAY tColores
-------------------------------------------------
+
 CREATE OR REPLACE TYPE tColores AS VARRAY(10) OF VARCHAR2(20);
 /
 
-------------------------------------------------
+
 -- TIPO tProducto
-------------------------------------------------
+
 CREATE OR REPLACE TYPE tProducto AS OBJECT (
     codigo CHAR(4),
     descripcion VARCHAR2(100),
@@ -136,15 +134,15 @@ CREATE OR REPLACE TYPE BODY tProducto AS
 END;
 /
 
-------------------------------------------------
+
 -- TABLA PRODUCTO
-------------------------------------------------
+
 CREATE TABLE PRODUCTO OF tProducto;
 ALTER TABLE PRODUCTO ADD PRIMARY KEY (codigo);
 
-------------------------------------------------
+
 -- INSERTS PRODUCTO
-------------------------------------------------
+
 INSERT INTO PRODUCTO VALUES ('CHA1','CHANDAL NIÑO 5-6 AÑOS',
     tColores('Amarillo','Azul','Verde'),20.50,5,8);
 
@@ -178,9 +176,9 @@ INSERT INTO PRODUCTO VALUES ('BAB2','BALON BALONCESTO Nº 6',
 INSERT INTO PRODUCTO VALUES ('BI1','BICICLETA 16 PULGADAS',
     tColores('Rojo','Negro'),120,3,5);
 
-------------------------------------------------
+
 -- TIPO tFactura
-------------------------------------------------
+
 CREATE OR REPLACE TYPE tFactura AS OBJECT (
     numero INT,
     fecha DATE,
@@ -197,16 +195,16 @@ CREATE OR REPLACE TYPE BODY tFactura AS
 END;
 /
 
-------------------------------------------------
+
 -- TABLA FACTURA
-------------------------------------------------
+
 CREATE TABLE FACTURA OF tFactura;
 ALTER TABLE FACTURA ADD PRIMARY KEY (numero);
 ALTER TABLE FACTURA ADD FOREIGN KEY (nif) REFERENCES CLIENTE(nif);
 
-------------------------------------------------
+
 -- INSERTS FACTURA
-------------------------------------------------
+
 INSERT INTO FACTURA VALUES (6000, DATE '2023-01-10', '55555555D');
 INSERT INTO FACTURA VALUES (6001, DATE '2023-01-11', '55555555D');
 INSERT INTO FACTURA VALUES (6002, DATE '2023-02-12', '66666666E');
@@ -214,9 +212,9 @@ INSERT INTO FACTURA VALUES (6003, DATE '2023-02-15', '66666666E');
 INSERT INTO FACTURA VALUES (6004, DATE '2023-03-20', '77777777F');
 INSERT INTO FACTURA VALUES (6005, DATE '2023-03-22', '88888888G');
 
-------------------------------------------------
+
 -- TIPO tDetalle
-------------------------------------------------
+
 CREATE OR REPLACE TYPE tDetalle AS OBJECT (
     idetalle INTEGER,
     numero INTEGER,
@@ -241,17 +239,16 @@ CREATE OR REPLACE TYPE BODY tDetalle AS
 END;
 /
 
-------------------------------------------------
 -- TABLA DETALLE
-------------------------------------------------
+
 CREATE TABLE DETALLE OF tDetalle;
 ALTER TABLE DETALLE ADD PRIMARY KEY (idetalle);
 ALTER TABLE DETALLE ADD FOREIGN KEY (numero) REFERENCES FACTURA(numero);
 ALTER TABLE DETALLE ADD FOREIGN KEY (codigo) REFERENCES PRODUCTO(codigo);
 
-------------------------------------------------
+
 -- INSERTS DETALLE
-------------------------------------------------
+
 INSERT INTO DETALLE VALUES (101, 6000, 'CHA1', 2, 20.50);
 INSERT INTO DETALLE VALUES (102, 6000, 'CHA2', 1, 22.00);
 INSERT INTO DETALLE VALUES (103, 6000, 'BAF1', 3, 8);
@@ -264,6 +261,7 @@ INSERT INTO DETALLE VALUES (109, 6004, 'COR1', 2, 18);
 INSERT INTO DETALLE VALUES (110, 6004, 'CORM', 1, 19);
 INSERT INTO DETALLE VALUES (111, 6005, 'BAF2', 2, 7);
 INSERT INTO DETALLE VALUES (112, 6005, 'BAB1', 1, 9);
+
 
 
 
